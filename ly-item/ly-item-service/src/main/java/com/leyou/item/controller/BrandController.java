@@ -21,6 +21,7 @@ import java.util.List;
 public class BrandController {
     @Autowired
     private BrandService brandService;
+    private CategoryService categoryService;
 
     /**
      * 分页查询品牌
@@ -55,4 +56,17 @@ public class BrandController {
         this.brandService.saveBrand(brand, cids);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    /**
+     * 删除品牌
+     * @param id
+     * @return
+     */
+    @DeleteMapping
+    public ResponseEntity<Void> deleteBrand(@RequestParam("id") Long id) {
+        this.brandService.deleteBrand(id);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+
 }
