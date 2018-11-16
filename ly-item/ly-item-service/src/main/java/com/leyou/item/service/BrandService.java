@@ -51,15 +51,30 @@ public class BrandService {
     @Transactional
     public void saveBrand(Brand brand, List<Long> cids) {
         // 新增品牌信息
-        this.brandMapper.insertSelective(brand);
+        this.brandMapper.insert(brand);
         // 新增品牌和分类中间表
         for (Long cid : cids) {
             this.brandMapper.insertCategoryBrand(cid, brand.getId());
         }
     }
 
+    @Transactional
     public void deleteBrand(Long id) {
-        this.brandMapper.deleteByPrimaryKey(id);
-        this.brandMapper.deleteCategoryBrand(id);
+        int a=this.brandMapper.deleteCategoryBrand(id);
+        System.err.println("删除的tb_category_brand数量是:"+a);
+        int b=this.brandMapper.deleteByPrimaryKey(id);
+        System.err.println("删除的tb_brand数量是:"+b);
+
+    }
+
+    @Transactional
+    public void updateBrand(Brand brand, List<Long> cids) {
+        this.brandMapper.updateByPrimaryKey(brand);
+        this.brandMapper.deleteCategoryBrand(brand.getId());
+        // 新增品牌和分类中间表
+        for (Long cid : cids) {
+            this.brandMapper.insertCategoryBrand(cid, brand.getId());
+        }
+
     }
 }

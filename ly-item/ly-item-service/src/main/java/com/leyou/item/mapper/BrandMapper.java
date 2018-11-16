@@ -4,6 +4,7 @@ import com.leyou.item.pojo.Brand;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
@@ -20,6 +21,12 @@ public interface BrandMapper extends Mapper<Brand> {
     @Insert("INSERT INTO tb_category_brand (category_id, brand_id) VALUES (#{cid},#{bid})")
     int insertCategoryBrand(@Param("cid") Long cid, @Param("bid") Long bid);
 
-    @Delete("DELETE FROM tb_category_brand WHERE 'brand_id=${id}'")
+    /**
+     * 删除商品
+     * @param id
+     * @return
+     */
+    @Delete("DELETE FROM tb_category_brand WHERE brand_id=#{id}")
     int deleteCategoryBrand(@Param("id") Long id);
+
 }

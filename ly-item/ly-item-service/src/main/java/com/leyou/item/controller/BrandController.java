@@ -5,6 +5,7 @@ import com.leyou.item.pojo.Brand;
 import com.leyou.item.pojo.Category;
 import com.leyou.item.service.BrandService;
 import com.leyou.item.service.CategoryService;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,12 +59,25 @@ public class BrandController {
     }
 
     /**
+     * 修改品牌
+     * @param brand
+     * @param cids
+     * @return
+     */
+    @PutMapping
+    public ResponseEntity<Void> updateBrand(Brand brand, @RequestParam("cids")  List<Long> cids){
+        this.brandService.updateBrand(brand, cids);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    /**
      * 删除品牌
      * @param id
      * @return
      */
-    @DeleteMapping
-    public ResponseEntity<Void> deleteBrand(@RequestParam("id") Long id) {
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteBrand(@PathVariable("id") Long id) {
+        System.err.println("删除的id:"+id);
         this.brandService.deleteBrand(id);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

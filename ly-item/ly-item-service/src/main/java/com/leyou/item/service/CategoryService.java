@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Wang
@@ -32,5 +33,12 @@ public class CategoryService {
         return this.categoryMapper.queryByBrandId(bid);
     }
 
-
+    /**
+     * 查询分类名称
+     * @param ids
+     * @return
+     */
+    public List<String> queryNameByIds(List<Long> ids) {
+        return this.categoryMapper.selectByIdList(ids).stream().map(Category::getName).collect(Collectors.toList());
+    }
 }
