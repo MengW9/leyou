@@ -31,6 +31,7 @@ public class UploadService {
     FastFileStorageClient storageClient;
 
     public String upload(MultipartFile file) {
+        System.err.println("进入上传");
         try {
             // 1、图片信息校验
             // 1)校验文件类型
@@ -45,8 +46,8 @@ public class UploadService {
                 logger.info("上传失败，文件内容不符合要求");
                 return null;
             }
-            // 2、将图片上传到FastDFS
-            // 2.1、生成保存目录
+
+            /*// 2.1、生成保存目录
             File dir = new File("D:\\heima\\upload");
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -57,14 +58,17 @@ public class UploadService {
             // 2.3、拼接图片地址
             String url = "http://image.leyou.com/upload/" + file.getOriginalFilename();
 
-            return url;
-            /*// 2.1、获取文件后缀名
+            return url;*/
+
+
+            // 2、将图片上传到FastDFS
+            // 2.1、获取文件后缀名
             String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
             // 2.2、上传
             StorePath storePath = this.storageClient.uploadFile(
                     file.getInputStream(), file.getSize(), extension, null);
             // 2.3、返回完整路径
-            return "http://image.leyou.com/" + storePath.getFullPath();*/
+            return "http://image.leyou.com/" + storePath.getFullPath();
         } catch (Exception e) {
             return null;
         }
